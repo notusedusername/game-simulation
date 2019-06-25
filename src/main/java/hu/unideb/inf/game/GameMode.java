@@ -56,7 +56,7 @@ public class GameMode {
                 }
             }
         } catch (Exception e) {
-            System.out.println(generatedDeck.getDeck().toString());
+            e.printStackTrace();
         }
     }
 

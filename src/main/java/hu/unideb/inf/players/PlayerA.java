@@ -27,8 +27,4 @@ public class PlayerA extends Player {
         return hand;
     }
 
-    public void setHand(ArrayList<Integer> hand) {
-        this.hand = hand;
-    }
-
 }

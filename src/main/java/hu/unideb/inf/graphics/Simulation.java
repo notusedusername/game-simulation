@@ -2,10 +2,10 @@ package hu.unideb.inf.graphics;
 
 import hu.unideb.inf.game.EndState;
 import hu.unideb.inf.game.GameMode;
-import hu.unideb.inf.game.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -46,18 +46,30 @@ public class Simulation {
             }
 
             if (i == timer - 1) {
+                int fxWins = wins;
+                int fxLoses = loses;
+                int fxTies = ties;
                 final int counter = i;
                 Platform.runLater(() -> {
                     Label header = new Label("Simulation ran " + (counter + 1) + " times");
                     Label time = new Label("Elapsed time: " + (System.nanoTime() - startTime) / 1000000 + " ms");
-                    Label stats = new Label("Stats: " + "wins: " + wins + " loses:" + loses + " ties: " + ties);
+                    Label stats = new Label("Stats: " + "wins: " + fxWins + " loses: " + fxLoses + " ties: " + fxTies);
                     header.getStyleClass().add("header");
                     list.getChildren().addAll(header, time, stats);
                 });
-
                 timer *= 10;
             }
         }
+        Platform.runLater(() -> {
+            startButton.disableProperty().setValue(false);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Info");
+            alert.setHeaderText("Simulation Ended!");
+            alert.setContentText("The simulation was " + (wins / 1000000.0) * 100 + "% successful!");
+
+            alert.showAndWait();
+        });
+
     }
 
     public void handleStart(ActionEvent actionEvent) {
@@ -73,8 +85,6 @@ public class Simulation {
         Thread backgroundThread = new Thread(task);
         backgroundThread.setDaemon(true);
         backgroundThread.start();
-
-        startButton.disableProperty().setValue(false);
     }
 
     public void handleExit(ActionEvent actionEvent) {
