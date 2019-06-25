@@ -1,59 +1,32 @@
 package hu.unideb.inf.players;
 
-import java.util.ArrayList;
+import hu.unideb.inf.game.Deck;
 
 
 /**
  * A játékos ősosztály. Minden játékos csak az első, vagy az
  * utolsó elemet veheti el, így ezek az operátorok.
  */
-public class Player {
-
+class Player {
     /**
-     * A pakli nagyobb választható kártyáját választja
-     *
-     * @param deck pakli
-     * @return a nagyobb elem értéke
-     */
-    static int getBiggerElement(ArrayList<Integer> deck) {
-        if (getFirstElement(deck) > getLastElement(deck)) {
-            return deck.remove(0);
-        } else {
-            return deck.remove(deck.size() - 1);
-        }
-    }
-
-    /**
-     * A pakli kisebb választható kártyáját választja
-     *
-     * @param deck pakli
-     * @return a kisebb elem értéke
-     */
-    static int getLessElement(ArrayList<Integer> deck) {
-        if (getFirstElement(deck) < getLastElement(deck)) {
-            return deck.remove(0);
-        } else {
-            return deck.remove(deck.size() - 1);
-        }
-    }
-
-    /**
-     * Az első elem értékét adja vissza.
-     *
+     * Visszaadja a választott elemet ({@code Choice}), de nem
+     * változtatja az adatokat.
+     * @param choice Choice objektum, melyik elemet kéri
      * @param deck a pakli
-     * @return első elem
+     * @return a Choice alapján elért elem értéke
      */
-    static int getFirstElement(ArrayList<Integer> deck) {
-        return deck.get(0);
+    int getSelectableElement(Choice choice, Deck deck) {
+        return deck.getDeck().get(choice.getIndex(deck, choice));
+    }
+    /**
+     * Visszaadja a választott elemet ({@code Choice}), és
+     * változtatja az adatokat, kiveszi ezt az elemet a pakliból.
+     * @param choice Choice objektum, melyik elemet kéri
+     * @param deck a pakli
+     * @return a Choice alapján elért elem értéke
+     */
+    int chooseSelectableElement(Choice choice, Deck deck) {
+        return deck.getDeck().remove(choice.getIndex(deck, choice));
     }
 
-    /**
-     * Az utolsó elem értékét adja vissza
-     *
-     * @param deck a pakli
-     * @return az utolsó elem
-     */
-    static int getLastElement(ArrayList<Integer> deck) {
-        return deck.get(deck.size() - 1);
-    }
 }

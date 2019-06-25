@@ -4,13 +4,19 @@ import hu.unideb.inf.game.Deck;
 
 public enum Choice {
     FIRST,
-    LAST;
+    LAST,
+    BIGGER,
+    LESS;
 
     public int getIndex(Deck deck, Choice choice) {
-        if (choice == Choice.FIRST) {
+        if (choice == FIRST) {
             return 0;
-        } else {
+        } else if (choice == LAST) {
             return deck.getDeck().size() - 1;
+        } else if (choice == BIGGER) {
+            return (deck.getDeck().get(0) > deck.getDeck().get(deck.getDeck().size() - 1)) ? 0 : deck.getDeck().size() - 1;
+        } else {
+            return (deck.getDeck().get(0) < deck.getDeck().get(deck.getDeck().size() - 1)) ? 0 : deck.getDeck().size() - 1;
         }
     }
 }

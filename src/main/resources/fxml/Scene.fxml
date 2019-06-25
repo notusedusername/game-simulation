@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Label?>
+<BorderPane id="BorderPane" prefHeight="400" prefWidth="600" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="hu.unideb.inf.graphics.Simulation">
+    <top>
+        <Label text="GAME SIMULATION" BorderPane.alignment="CENTER"/>
+    </top>
+    <center>
+        <ScrollPane>
+            <VBox fx:id="list">
+
+            </VBox>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <HBox id="buttonBox" alignment="CENTER" BorderPane.alignment="CENTER">
+            <Button fx:id="startButton" onAction="#handleStart" prefWidth="200" text="Start"/>
+            <Button onAction="#handleExit" prefWidth="200" text="Exit"/>
+        </HBox>
+
+    </bottom>
+</BorderPane>

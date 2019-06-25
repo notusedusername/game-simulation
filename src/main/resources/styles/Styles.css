@@ -1,0 +1,15 @@
+.button, .header {
+    -fx-font-weight: bold;
+}
+
+.label {
+    -fx-padding: 10;
+}
+
+#BorderPane {
+    -fx-padding: 20;
+}
+
+#buttonBox {
+    -fx-padding: 10;
+}
