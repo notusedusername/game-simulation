@@ -2,6 +2,8 @@ package hu.unideb.inf.players;
 
 import hu.unideb.inf.game.Deck;
 
+import java.util.ArrayList;
+
 
 /**
  * A játékos ősosztály. Minden játékos csak az első, vagy az
