@@ -22,7 +22,7 @@ public class GameMode {
     private static void initialize() {
         generatedDeck = DeckGenerator.generateNewDeck(10000);
         playerA = new PlayerA();
-        playerB = new PlayerB(7);
+        playerB = new PlayerB();
     }
 
     /**
@@ -56,6 +56,7 @@ public class GameMode {
                 }
             }
         } catch (Exception e) {
+            System.out.println(generatedDeck.getDeck().toString());
             e.printStackTrace();
         }
     }

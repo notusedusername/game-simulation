@@ -3,7 +3,7 @@ package hu.unideb.inf.game;
 import java.util.ArrayList;
 
 /**
- * The {@code Deck} can contain a deck of cards with an Integer value.
+ * The {@code Deck} can contain a deck of cards with Integer values.
  */
 public class Deck {
 

@@ -27,6 +27,7 @@ class Player {
      */
     int chooseSelectableElement(Choice choice, Deck deck) {
         return deck.getDeck().remove(choice.getIndex(deck, choice));
+
     }
 
 }
