@@ -72,6 +72,11 @@ public class Simulation {
 
     }
 
+    /**
+     * Start button event handler.
+     *
+     * @param actionEvent event
+     */
     public void handleStart(ActionEvent actionEvent) {
 
         wins = 0;
@@ -87,6 +92,11 @@ public class Simulation {
         backgroundThread.start();
     }
 
+    /**
+     * Exit button event handler.
+     *
+     * @param actionEvent event
+     */
     public void handleExit(ActionEvent actionEvent) {
         Platform.exit();
     }

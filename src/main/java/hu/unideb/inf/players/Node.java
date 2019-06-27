@@ -1,10 +1,13 @@
 package hu.unideb.inf.players;
 
-import static hu.unideb.inf.players.Player.*;
-
 import hu.unideb.inf.game.Deck;
 
-
+/**
+ * Class of the modded AI depth search.
+ * Every node is a state of the deck, but the
+ * parent, the used operator, and the player who made the move
+ * are available too.
+ */
 public class Node {
     private Deck state;
     private Node parent;

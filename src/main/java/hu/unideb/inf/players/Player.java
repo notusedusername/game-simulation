@@ -6,26 +6,24 @@ import java.util.ArrayList;
 
 
 /**
- * A játékos ősosztály. Minden játékos csak az első, vagy az
- * utolsó elemet veheti el, így ezek az operátorok.
+ * The Player parent class, contains the default operations
+ * of a player (examine item, get item).
  */
 class Player {
     /**
-     * Visszaadja a választott elemet ({@code Choice}), de nem
-     * változtatja az adatokat.
-     * @param choice Choice objektum, melyik elemet kéri
-     * @param deck a pakli
-     * @return a Choice alapján elért elem értéke
+     * Gets the choosed item, but does not affect its value.
+     * @param choice the {@link Choice}
+     * @param deck the deck
+     * @return the value of the choosed item
      */
     int getSelectableElement(Choice choice, Deck deck) {
         return deck.getDeck().get(choice.getIndex(deck, choice));
     }
     /**
-     * Visszaadja a választott elemet ({@code Choice}), és
-     * változtatja az adatokat, kiveszi ezt az elemet a pakliból.
-     * @param choice Choice objektum, melyik elemet kéri
-     * @param deck a pakli
-     * @return a Choice alapján elért elem értéke
+     * Choose the selected item, removes the item from the deck.
+     * @param choice the {@link Choice}
+     * @param deck the deck
+     * @return the value of the removed item
      */
     int chooseSelectableElement(Choice choice, Deck deck) {
         return deck.getDeck().remove(choice.getIndex(deck, choice));
