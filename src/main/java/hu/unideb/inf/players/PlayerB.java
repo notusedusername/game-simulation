@@ -5,57 +5,50 @@ import hu.unideb.inf.game.Deck;
 import java.util.ArrayList;
 
 /**
- * A B játékos osztálya.
+ * Class of Player B.
  */
-public class PlayerB extends Player {//fixme 10% win rate
+public class PlayerB extends Player {
 
     private ArrayList<Integer> hand = new ArrayList<>();
     private ArrayList<Choice> operators = new ArrayList<>();
     private ArrayList<Choice> plannedChoices = new ArrayList<>();
     private Node bestChoice;
     private int limit;
+    private int max;
 
-    public PlayerB() {
+    /**
+     * Initializes the selectable operators, and the limit.
+     */
+    public PlayerB(int limit) {
         operators.add(Choice.FIRST);
         operators.add(Choice.LAST);
-        limit = 5;
+        this.limit = limit;
     }
     /**
-     * A B játékos (DIY) stratégiája.
+     * The strategy of the player B. It uses a modded depth solution finder.
+     * If there is planned moves, then makes it, else creates a new plan,
+     * then start to execute it.
      *
-     * @param deck a pakli
+     * @param deck the deck
      */
     public int selectElement(Deck deck) {
 
-        /*if (deck.getDeck().size() > 2) {
-            int selectFirst, selectSecond;
-            Deck test = new Deck(deck.getDeck());
-            chooseSelectableElement(Choice.FIRST, test);
-            selectFirst = predict(test);
-
-            test = new Deck(deck.getDeck());
-            chooseSelectableElement(Choice.LAST, test);
-            selectSecond = predict(test);
-
-            if (selectFirst < selectSecond) {
-                return chooseSelectableElement(Choice.FIRST, deck);
-            } else {
-                return chooseSelectableElement(Choice.LAST, deck);
-            }
-        } else {
-            return chooseSelectableElement(Choice.BIGGER, deck);
-        }
-        */
         if (plannedChoices.isEmpty()) {
             updateLimit(deck);
             planChoices(new Deck(deck.getDeck()));
             traceBestChoice();
         }
-        return chooseSelectableElement(plannedChoices.get(plannedChoices.size() - 1), deck);
+
+        return chooseSelectableElement(plannedChoices.remove(plannedChoices.size() - 1), deck);
     }
 
+    /**
+     * Controls the solution finder, examines all the possibilities.
+     *
+     * @param state the state to examine
+     */
     private void planChoices(Deck state) {
-        int max = 0;
+        max = 0;
 
         Node node = new Node(state, 0, null, null, 0, false);
         Node choosedNode = null;
@@ -66,7 +59,7 @@ public class PlayerB extends Player {//fixme 10% win rate
             if (opened.isEmpty()) {
                 break;
             }
-            choosedNode = chooseNode(opened, max);
+            choosedNode = chooseNode(opened);
 
             if (choosedNode == null) {
                 break;
@@ -77,6 +70,14 @@ public class PlayerB extends Player {//fixme 10% win rate
 
     }
 
+    /**
+     * Gets all the possible next step, in case player A it only
+     * get the bigger choose.
+     *
+     * @param node   the current node
+     * @param opened the nodes waiting for examination
+     * @param closed the nodes that was already examined
+     */
     private void extend(Node node, ArrayList<Node> opened, ArrayList<Node> closed) {
         if (node.isPlayerBMove()) {
             Deck newState = new Deck(node.getState().getDeck());
@@ -93,7 +94,15 @@ public class PlayerB extends Player {//fixme 10% win rate
         closed.add(node);
     }
 
-    private Node chooseNode(ArrayList<Node> opened, int max) {
+    /**
+     * Choose a node from the opened ones. It gets always the last item,
+     * it has the biggest depth. If this node is the current best, updates the
+     * {@code bestChoice}.
+     *
+     * @param opened the nodes waiting for examination
+     * @return the choosed node in range of the limit
+     */
+    private Node chooseNode(ArrayList<Node> opened) {
         Node choosedNode = opened.get(opened.size() - 1);
         while (choosedNode.getDepth() >= limit) {
             if (max < choosedNode.getValue()) {
@@ -112,6 +121,10 @@ public class PlayerB extends Player {//fixme 10% win rate
         return choosedNode;
     }
 
+    /**
+     * Tracks the way from the best possibility back to the current state.
+     * Fills up the {@code plannedChoices} with the operators.
+     */
     private void traceBestChoice() {
         int iterator = 0;
         while (bestChoice.getParent() != null) {
@@ -125,8 +138,13 @@ public class PlayerB extends Player {//fixme 10% win rate
         }
     }
 
+    /**
+     * Updates the limit, if the deck doesn't have as many items,
+     * as the limit
+     * @param deck the deck
+     */
     private void updateLimit(Deck deck) {
-        if (deck.getDeck().size() < 5) {
+        if (deck.getDeck().size() < limit) {
             limit = deck.getDeck().size();
         }
     }
